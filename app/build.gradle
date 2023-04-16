@@ -1,54 +1,66 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
-
+    id(Plugins.AGP.application)
+    id(Plugins.Kotlin.android)
+    id(Plugins.Kotlin.kapt)
+    id(Plugins.DaggerHilt.hilt)
 }
 
 android {
-    namespace 'com.alya.kotlin_6_month'
-    compileSdk 33
+    namespace = "com.alya.kotlin_6_month"
+    compileSdk = AndroidConfig.compileSdk
 
     defaultConfig {
-        applicationId "com.alya.kotlin_6_month"
-        minSdk 21
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        applicationId = "com.alya.kotlin_6_month"
+        minSdk = AndroidConfig.minSdk
+        targetSdk = AndroidConfig.targetSdk
+        versionCode = 1
+        versionName = "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro')
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
-
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    //UI
+    implementation(Deps.UI.core)
+    implementation(Deps.UI.appcompat)
+    implementation(Deps.UI.material)
+    implementation(Deps.UI.constraitlayout)
+    testImplementation(Deps.UI.junit)
+    androidTestImplementation(Deps.UI.testJunit)
+    androidTestImplementation(Deps.UI.espresso)
+    implementation(Deps.UI.fragment)
+    implementation(Deps.UI.navigationFrag)
+    implementation(Deps.UI.navigationUI)
     // Room
-    def room_version = "2.4.3"
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-    implementation 'com.google.dagger:hilt-android:2.44.2'
-    kapt 'com.google.dagger:hilt-compiler:2.44.2'
+    implementation(Deps.Room.roomRuntime)
+    implementation(Deps.Room.room)
+    kapt(Deps.Room.compiler)
+    //Coroutines
+    implementation(Deps.Coroutines.coroutines)
+    //Hilt
+    implementation(Deps.DaggerHilt.android)
+    kapt(Deps.DaggerHilt.compiler)
+    //Lifecycle
+    implementation(Deps.Lifecycle.runtime)
+    implementation(Deps.Lifecycle.livedata)
+    implementation(Deps.Lifecycle.viewModel)
 }

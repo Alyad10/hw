@@ -10,10 +10,12 @@ import javax.inject.Inject
 class NoteRepositoryImpl @Inject constructor(private val noteDao: NoteDao) : NoteRepository,
     BaseRepository() {
 
+
     override fun createNote(note: Note) = doRequest {
         noteDao.createNotes(note.toEntity())
-    }
 
+
+    }
 
     override fun getAllNotes() = doRequest {
         noteDao.getAllNotes().map { it.toNote() }

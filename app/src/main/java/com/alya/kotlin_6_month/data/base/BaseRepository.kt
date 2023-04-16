@@ -9,10 +9,9 @@ abstract class BaseRepository {
     protected fun <T> doRequest( request: suspend () -> T) = flow {
         emit(Resource.Loading())
         try {
-            emit(Resource.Success(request))
-
-        }catch (ioExeption : IOException){
-            emit(Resource.Error(ioExeption.localizedMessage ?:"Unknown error!"))
+            emit(Resource.Success(request()))
+        }catch (ioExсeption : IOException){
+            emit(Resource.Error(ioExсeption.localizedMessage ?:"Unknown error!"))
         }
 
     }.flowOn(Dispatchers.IO)
