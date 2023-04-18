@@ -22,8 +22,8 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile('proguard-android-optimize.txt'),
-                    'proguard-rules.pro')
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -31,7 +31,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
     }
     buildFeatures {
         viewBinding = true
