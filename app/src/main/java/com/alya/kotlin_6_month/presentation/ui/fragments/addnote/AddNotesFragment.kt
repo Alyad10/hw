@@ -1,9 +1,5 @@
 package com.alya.kotlin_6_month.presentation.ui.fragments.addnote
-
-import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,15 +15,17 @@ import com.alya.kotlin_6_month.presentation.utils.UIState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import androidx.navigation.fragment.findNavController
+import com.alya.kotlin_6_month.presentation.ui.base.BaseFragment
 
 
 @AndroidEntryPoint
-class AddNotesFragment : Fragment() {
+class AddNotesFragment : BaseFragment(R.layout.fragment_add_notes) {
 
     private var _binding: FragmentAddNotesBinding? = null
     private val binding get() = _binding!!
     private val viewModel : AddNotesViewModel by viewModels()
     private var note : Note? = null
+    private var isNull = true
 
 
 
@@ -40,15 +38,27 @@ class AddNotesFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initialize()
-        setupRequests()
+    override fun setupRequests() {
+        initClickers()
+    }
+    override fun initSubscribers() {
         setupSubscribers()
-        initListeners()
+        collectEditNote()
+    }
+    private fun getNote() {
+        if (arguments?.getSerializable("key") == null) {
+            note = Note()
+        } else {
+            note = arguments?.getSerializable("key") as Note
+            binding.etTitle.setText(note!!.title)
+            binding.etDesc.setText(note!!.description)
+            binding.btnSave.text = "Edit"
+            isNull = false
+        }
     }
 
-    private fun initListeners() {
+
+    private fun initClickers() {
         with(binding) {
             btnSave.setOnClickListener {
                 if (binding.etTitle.text.isNotEmpty() && binding.etDesc.text.isNotEmpty()) {
@@ -64,17 +74,7 @@ class AddNotesFragment : Fragment() {
         }
 
     }
-
-    private fun setupRequests() {
-        note?.let { viewModel.createNotes(it) }
-        note?.let { viewModel.editNote(it) }
-        findNavController().navigateUp()
-
-
-    }
-
-
-    private fun setupSubscribers() {
+    override fun setupSubscribers() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.createNoteState.collect { state ->
@@ -89,14 +89,20 @@ class AddNotesFragment : Fragment() {
 
                         }
                         is UIState.Success -> {
-                            binding.etTitle.text.toString()
-                            binding.etDesc.text.toString()
+                            findNavController().navigateUp()
+
+                        }
 
                         }
                     }
                 }
             }
         }
+
+    override fun initialize() {
+        getNote()
+    }
+    private fun collectEditNote(){
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.editNoteState.collect { state ->
@@ -109,8 +115,7 @@ class AddNotesFragment : Fragment() {
                         is UIState.Loading -> {
                         }
                         is UIState.Success -> {
-                            binding.etTitle.text.toString()
-                            binding.etDesc.text.toString()
+                            findNavController().navigateUp()
 
                         }
                     }
@@ -118,21 +123,4 @@ class AddNotesFragment : Fragment() {
             }
         }
     }
-
-    @SuppressLint("SetTextI18n")
-    private fun initialize() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            note = arguments?.getSerializable("key") as Note?
-            if (note == null) {
-                binding.btnSave.text = getString(R.string.save)
-            } else {
-                note = arguments?.getSerializable("key", Note::class.java)
-                binding.etTitle.setText(note!!.title)
-                binding.etDesc.setText(note!!.description)
-                binding.btnSave.text = "Edit"
-            }
-        }
-
-    }
-
 }

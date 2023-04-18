@@ -1,12 +1,19 @@
 package com.alya.kotlin_6_month.presentation.ui.fragments.notes.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.alya.kotlin_6_month.databinding.ItemNoteBinding
 import com.alya.kotlin_6_month.domain.model.Note
+import kotlin.reflect.KFunction1
 
-class NotesAdapter(var listener: Listener) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
+class NotesAdapter(
+    private var onClick: (Note) -> Unit,
+    private var onLongClick: (Note) -> Unit,
+) : ListAdapter<Note, NotesAdapter.NoteViewHolder>(DiffUtilNoteItemCallback()) {
     private val data: ArrayList<Note> = arrayListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
@@ -17,15 +24,9 @@ class NotesAdapter(var listener: Listener) : RecyclerView.Adapter<NotesAdapter.N
         )
     }
 
-    fun addTasks(newData: List<Note>) {
-        data.clear()
-        data.addAll(newData)
-        notifyDataSetChanged()
-    }
-
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        holder.bind(data[position], listener, position)
+        holder.bind(data[position])
     }
 
     override fun getItemCount(): Int {
@@ -34,26 +35,28 @@ class NotesAdapter(var listener: Listener) : RecyclerView.Adapter<NotesAdapter.N
 
     inner class NoteViewHolder(private val binding: ItemNoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(note: Note, listener: Listener, position: Int) {
+        fun bind(note: Note) {
             binding.tvTitle.text = note.title
             binding.tvDesc.text = note.description
-            itemView.setOnLongClickListener {
-                listener.onTaskDeleteClickListener(note, position)
-                true
-            }
             itemView.setOnClickListener {
-                listener.onClick(note)
-
+                onClick(note)
             }
-
+            itemView.setOnLongClickListener {
+                onLongClick(note)
+                return@setOnLongClickListener true
+            }
         }
-
     }
 
+    private class DiffUtilNoteItemCallback : DiffUtil.ItemCallback<Note>() {
+        override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    interface Listener {
-        fun onTaskDeleteClickListener(note: Note, position: Int)
-        fun onClick(note: Note)
+        @SuppressLint("DiffUtilEquals")
+        override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
+            return oldItem == newItem
+        }
     }
 
 }
