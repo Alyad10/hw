@@ -1,17 +1,13 @@
 package com.alya.kotlin_6_month.presentation.ui.fragments.notes
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.alya.kotlin_6_month.domain.model.Note
 import com.alya.kotlin_6_month.domain.usecases.DeleteNoteUseCase
 import com.alya.kotlin_6_month.domain.usecases.GetAllNotesUseCase
-import com.alya.kotlin_6_month.domain.utils.Resource
 import com.alya.kotlin_6_month.presentation.ui.base.BaseViewModel
 import com.alya.kotlin_6_month.presentation.utils.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

@@ -25,13 +25,11 @@ import com.alya.kotlin_6_month.presentation.ui.base.BaseFragment
 @AndroidEntryPoint
 class NoteFragment : BaseFragment(R.layout.fragment_note) {
     private var _binding: FragmentNoteBinding? = null
-    private lateinit var adapter: NotesAdapter
     private val adapterNotes by lazy { NotesAdapter(this::onClick, this::onLongClick) }
     private val viewModel: NoteViewModel by viewModels()
     private val binding get() = _binding!!
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentNoteBinding.inflate(inflater, container, false)
         return binding.root
@@ -47,14 +45,11 @@ class NoteFragment : BaseFragment(R.layout.fragment_note) {
     }
 
     override fun setupSubscribers() {
-        viewModel.getAllNotesState.collectUIState(
-            state = {
-                binding.progressCircular.isVisible = it is UIState.Loading
-            },
-            onSuccess = {
-                adapterNotes.submitList(it)
-            }
-        )
+        viewModel.getAllNotesState.collectUIState(state = {
+            binding.progressCircular.isVisible = it is UIState.Loading
+        }, onSuccess = {
+            adapterNotes.submitList(it)
+        })
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.deleteNotesState.collect { state ->
@@ -85,6 +80,7 @@ class NoteFragment : BaseFragment(R.layout.fragment_note) {
     private fun onClick(note: Note) {
         findNavController().navigate(R.id.addNotesFragment, bundleOf("key" to Note))
     }
+
     private fun onLongClick(note: Note) {
         AlertDialog.Builder(context).setTitle("Are you want to delete ${note.title}?")
             .setMessage("Are you sure you want to delete it?")
