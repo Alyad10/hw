@@ -32,7 +32,7 @@ object Deps{
         const val navigationUI = "androidx.navigation:navigation-ui-ktx:${Versions.navigationFrag}"
 
     }
-    object DaggerHilt{
+    object DaggerHiltC{
         const val compiler = "com.google.dagger:hilt-compiler:${Versions.hilt}"
         const val android = "com.google.dagger:hilt-android:${Versions.hilt}"
     }

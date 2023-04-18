@@ -4,6 +4,7 @@ import androidx.room.Room
 import com.alya.kotlin_6_month.data.local.NoteDao
 import com.alya.kotlin_6_month.data.local.NoteDataBase
 import com.alya.kotlin_6_month.data.repository.NoteRepositoryImpl
+import com.alya.kotlin_6_month.domain.repository.NoteRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,5 +26,7 @@ object NoteAppModule {
     @Singleton
     fun provideNoteDao(noteDataBase: NoteDataBase) = noteDataBase.noteDao()
     @Provides
-    fun provideNoteRepository(noteDao: NoteDao) = NoteRepositoryImpl(noteDao)
+    fun provideNoteRepository(noteDao: NoteDao) :NoteRepository{
+        return NoteRepositoryImpl(noteDao)
+    }
 }

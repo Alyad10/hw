@@ -57,8 +57,8 @@ dependencies {
     //Coroutines
     implementation(Deps.Coroutines.coroutines)
     //Hilt
-    implementation(Deps.DaggerHilt.android)
-    kapt(Deps.DaggerHilt.compiler)
+    implementation(Deps.DaggerHiltC.android)
+    kapt(Deps.DaggerHiltC.compiler)
     //Lifecycle
     implementation(Deps.Lifecycle.runtime)
     implementation(Deps.Lifecycle.livedata)
