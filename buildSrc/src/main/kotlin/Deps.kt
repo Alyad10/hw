@@ -1,7 +1,7 @@
 object Versions{
     const val AGP = "7.3.1"
     const val hilt = "2.44.2"
-    const val android = "1.7.20"
+    const val android = "1.8.10"
     const val lifecycle = "2.6.1"
     const val room = "2.4.3"
     const val coroutines = "1.6.4"
@@ -14,9 +14,6 @@ object Versions{
     const val espresso ="3.5.1"
     const val fragment = "1.5.6"
     const val navigationFrag = "2.5.3"
-
-
-
 }
 object Deps{
     object UI{
@@ -59,11 +56,9 @@ object Plugins{
     object Kotlin{
         const val android = "org.jetbrains.kotlin.android"
         const val kapt = "kotlin-kapt"
-
     }
 
     object DaggerHilt{
         const val hilt = "com.google.dagger.hilt.android"
     }
-
 }

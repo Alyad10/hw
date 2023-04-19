@@ -52,7 +52,7 @@ class AddNotesFragment : BaseFragment(R.layout.fragment_add_notes) {
             note = arguments?.getSerializable("key") as Note
             binding.etTitle.setText(note!!.title)
             binding.etDesc.setText(note!!.description)
-            binding.btnSave.text = "Edit"
+            binding.btnSave.text = "Update"
             isNull = false
         }
     }
@@ -64,7 +64,7 @@ class AddNotesFragment : BaseFragment(R.layout.fragment_add_notes) {
                 if (binding.etTitle.text.isNotEmpty() && binding.etDesc.text.isNotEmpty()) {
                     note?.title = etTitle.text.toString()
                     note?.description = etDesc.text.toString()
-                    if (note == null) {
+                    if (isNull) {
                         viewModel.createNotes(note!!)
                     } else {
                         viewModel.editNote(note!!)

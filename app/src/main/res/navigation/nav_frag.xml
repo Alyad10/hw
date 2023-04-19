@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/noteFragment">
+    <fragment
+        android:id="@+id/noteFragment"
+        android:name="com.alya.kotlin_6_month.presentation.ui.fragments.notes.NoteFragment"
+        android:label="fragment_note"
+        tools:layout="@layout/fragment_note" />
+    <fragment
+        android:id="@+id/addNotesFragment"
+        android:name="com.alya.kotlin_6_month.presentation.ui.fragments.addnote.AddNotesFragment"
+        android:label="fragment_add_notes"
+        tools:layout="@layout/fragment_add_notes"/>
+</navigation>

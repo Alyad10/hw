@@ -26,11 +26,8 @@ abstract class BaseFragment(
     }
 
     open fun initialize() {}
-
     open fun setupRequests() {}
-
     open fun setupSubscribers() {}
-
     open fun setupListeners() {}
     open fun initSubscribers() {}
 

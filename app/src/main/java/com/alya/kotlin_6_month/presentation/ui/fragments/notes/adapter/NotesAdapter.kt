@@ -8,13 +8,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.alya.kotlin_6_month.databinding.ItemNoteBinding
 import com.alya.kotlin_6_month.domain.model.Note
-import kotlin.reflect.KFunction1
 
 class NotesAdapter(
     private var onClick: (Note) -> Unit,
     private var onLongClick: (Note) -> Unit,
 ) : ListAdapter<Note, NotesAdapter.NoteViewHolder>(DiffUtilNoteItemCallback()) {
-    private val data: ArrayList<Note> = arrayListOf()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
             ItemNoteBinding.inflate(
@@ -26,11 +24,7 @@ class NotesAdapter(
 
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        holder.bind(data[position])
-    }
-
-    override fun getItemCount(): Int {
-        return data.size
+        holder.bind(getItem(position))
     }
 
     inner class NoteViewHolder(private val binding: ItemNoteBinding) :
@@ -43,7 +37,7 @@ class NotesAdapter(
             }
             itemView.setOnLongClickListener {
                 onLongClick(note)
-                return@setOnLongClickListener true
+                true
             }
         }
     }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -25,9 +24,10 @@ import com.alya.kotlin_6_month.presentation.ui.base.BaseFragment
 @AndroidEntryPoint
 class NoteFragment : BaseFragment(R.layout.fragment_note) {
     private var _binding: FragmentNoteBinding? = null
-    private val adapterNotes by lazy { NotesAdapter(this::onClick, this::onLongClick) }
+    private val adapterNote by lazy { NotesAdapter(this::onClick, this::onLongClick) }
     private val viewModel: NoteViewModel by viewModels()
     private val binding get() = _binding!!
+    private var title = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -36,10 +36,9 @@ class NoteFragment : BaseFragment(R.layout.fragment_note) {
     }
 
     override fun initialize() {
-        binding.recyclerView.adapter = adapterNotes
+        binding.recyclerView.adapter = adapterNote
+
     }
-
-
     override fun setupRequests() {
         viewModel.getAllNotes()
     }
@@ -48,23 +47,19 @@ class NoteFragment : BaseFragment(R.layout.fragment_note) {
         viewModel.getAllNotesState.collectUIState(state = {
             binding.progressCircular.isVisible = it is UIState.Loading
         }, onSuccess = {
-            adapterNotes.submitList(it)
+            adapterNote.submitList(it)
         })
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.deleteNotesState.collect { state ->
                     when (state) {
-                        is UIState.Empty -> {}
-                        is UIState.Error -> {
-                            Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT)
-                                .show()
-                        }
                         is UIState.Loading -> {
                         }
                         is UIState.Success -> {
                             setupRequests()
 
                         }
+                        else -> {}
                     }
                 }
             }
@@ -78,7 +73,7 @@ class NoteFragment : BaseFragment(R.layout.fragment_note) {
     }
 
     private fun onClick(note: Note) {
-        findNavController().navigate(R.id.addNotesFragment, bundleOf("key" to Note))
+        findNavController().navigate(R.id.addNotesFragment, bundleOf("key" to note))
     }
 
     private fun onLongClick(note: Note) {
@@ -90,6 +85,7 @@ class NoteFragment : BaseFragment(R.layout.fragment_note) {
                 viewModel.deleteNote(note)
 
             }
+            .show()
     }
 
 
