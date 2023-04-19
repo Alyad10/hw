@@ -39,6 +39,9 @@ android {
 }
 
 dependencies {
+    //Modules
+    implementation(project(":data1"))
+    implementation(project(":domain"))
     //UI
     implementation(Deps.UI.core)
     implementation(Deps.UI.appcompat)

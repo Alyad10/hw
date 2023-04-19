@@ -16,7 +16,7 @@ abstract class BaseViewModel : ViewModel() {
                 when (res) {
                     is Resource.Error -> {
                         if (res.message != null) {
-                            _state.value = UIState.Error(res.message)
+                            _state.value = UIState.Error(res.message!!)
                         }
                     }
                     is Resource.Loading -> {
@@ -24,7 +24,7 @@ abstract class BaseViewModel : ViewModel() {
                     }
                     is Resource.Success -> {
                         if (res.data != null) {
-                            _state.value = UIState.Success(res.data)
+                            _state.value = UIState.Success(res.data!!)
                         }
                     }
                 }

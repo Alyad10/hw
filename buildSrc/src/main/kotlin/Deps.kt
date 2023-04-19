@@ -14,6 +14,7 @@ object Versions{
     const val espresso ="3.5.1"
     const val fragment = "1.5.6"
     const val navigationFrag = "2.5.3"
+    const val inject = "1"
 }
 object Deps{
     object UI{
@@ -45,6 +46,11 @@ object Deps{
     }
     object Coroutines {
         const val coroutines= "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
+        const val coreCoroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
+
+    }
+    object JavaX{
+       const val inject ="javax.inject:javax.inject:${Versions.inject}"
     }
 
 }
@@ -56,9 +62,13 @@ object Plugins{
     object Kotlin{
         const val android = "org.jetbrains.kotlin.android"
         const val kapt = "kotlin-kapt"
+        const val jvm = "org.jetbrains.kotlin.jvm"
     }
 
     object DaggerHilt{
         const val hilt = "com.google.dagger.hilt.android"
+    }
+    object Java{
+        const val library = "java-library"
     }
 }

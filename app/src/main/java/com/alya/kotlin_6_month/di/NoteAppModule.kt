@@ -26,7 +26,7 @@ object NoteAppModule {
     @Singleton
     fun provideNoteDao(noteDataBase: NoteDataBase) = noteDataBase.noteDao()
     @Provides
-    fun provideNoteRepository(noteDao: NoteDao) :NoteRepository{
+    fun provideNoteRepository(noteDao: NoteDao) : NoteRepository {
         return NoteRepositoryImpl(noteDao)
     }
 }

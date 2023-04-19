@@ -72,11 +72,11 @@ class NoteFragment : BaseFragment(R.layout.fragment_note) {
         }
     }
 
-    private fun onClick(note: Note) {
+    private fun onClick(note: com.alya.kotlin_6_month.domain.model.Note) {
         findNavController().navigate(R.id.addNotesFragment, bundleOf("key" to note))
     }
 
-    private fun onLongClick(note: Note) {
+    private fun onLongClick(note: com.alya.kotlin_6_month.domain.model.Note) {
         AlertDialog.Builder(context).setTitle("Are you want to delete ${note.title}?")
             .setMessage("Are you sure you want to delete it?")
             .setNegativeButton("NO") { dialog, which ->

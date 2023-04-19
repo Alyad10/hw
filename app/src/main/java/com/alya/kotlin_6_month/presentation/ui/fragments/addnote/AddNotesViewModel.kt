@@ -12,19 +12,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddNotesViewModel @Inject constructor(
-    private val createNoteUseCase : CreateNoteUseCase,
-    private val editNoteUseCase: EditNoteUseCase
+    private val createNoteUseCase : com.alya.kotlin_6_month.domain.usecases.CreateNoteUseCase,
+    private val editNoteUseCase: com.alya.kotlin_6_month.domain.usecases.EditNoteUseCase
 ) :BaseViewModel() {
     private val _createNoteState = MutableStateFlow<UIState<Unit>>(UIState.Empty())
     val createNoteState = _createNoteState.asStateFlow()
     private val _editNoteState = MutableStateFlow<UIState<Unit>>(UIState.Empty())
     val editNoteState = _editNoteState.asStateFlow()
 
-    fun createNotes(note: Note) {
+    fun createNotes(note: com.alya.kotlin_6_month.domain.model.Note) {
         createNoteUseCase(note).collectData(_createNoteState)
     }
 
-    fun editNote(note: Note) {
+    fun editNote(note: com.alya.kotlin_6_month.domain.model.Note) {
         editNoteUseCase(note).collectData(_editNoteState)
     }
 }

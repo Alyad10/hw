@@ -16,3 +16,5 @@ rootProject.name = "Kotlin_6_month"
 include (
     ":app"
 )
+include(":data1")
+include(":domain")

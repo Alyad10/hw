@@ -24,7 +24,7 @@ class AddNotesFragment : BaseFragment(R.layout.fragment_add_notes) {
     private var _binding: FragmentAddNotesBinding? = null
     private val binding get() = _binding!!
     private val viewModel : AddNotesViewModel by viewModels()
-    private var note : Note? = null
+    private var note : com.alya.kotlin_6_month.domain.model.Note? = null
     private var isNull = true
 
 
@@ -47,9 +47,9 @@ class AddNotesFragment : BaseFragment(R.layout.fragment_add_notes) {
     }
     private fun getNote() {
         if (arguments?.getSerializable("key") == null) {
-            note = Note()
+            note = com.alya.kotlin_6_month.domain.model.Note()
         } else {
-            note = arguments?.getSerializable("key") as Note
+            note = arguments?.getSerializable("key") as com.alya.kotlin_6_month.domain.model.Note
             binding.etTitle.setText(note!!.title)
             binding.etDesc.setText(note!!.description)
             binding.btnSave.text = "Update"
